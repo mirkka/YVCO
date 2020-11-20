@@ -138,6 +138,7 @@ iframe {
 
 .info-wrapper {
   margin-bottom: -15px;
+  padding-bottom: 10px;
   padding-top: 10px;
   cursor: pointer;
   position: relative;
@@ -148,12 +149,13 @@ iframe {
 
 .info {
   display: none;
+  font-size: 14px;
 }
 
 .info-wrapper {
   &:hover {
     .info {
-      display: inline-block;
+      display: flex;
     }
   }
 }

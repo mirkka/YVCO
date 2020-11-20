@@ -190,7 +190,7 @@ function App() {
   )
 
   const info = (
-    <div className="info">info</div>
+    <a href="https://github.com/mirkka/YVCO" target="blank" className="info">github.com/mirkka/YVCO</a>
   )
 
   const videoId = getVideoId(videoUrl)
