@@ -38,13 +38,13 @@ jobs:
         AWS_S3_BUCKET: 'yvco'
         AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
-        AWS_REGION: 'us-east-1'
+        AWS_REGION: 'eu-west-1'
         SOURCE_DIR: './build'
     - name: invalidate
       uses: chetan/invalidate-cloudfront-action@master
       env:
         DISTRIBUTION: ${{ secrets.DISTRIBUTION }}
         PATHS: /*
-        AWS_REGION: 'eu-east-1'
+        AWS_REGION: 'eu-west-1'
         AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
