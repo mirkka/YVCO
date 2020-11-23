@@ -1,0 +1,50 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    defaults:
+      run:
+        working-directory: ./
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm ci
+    - run: npm run build
+      env:
+        CI: ""
+    - uses: jakejarvis/s3-sync-action@master
+      with:
+        args: --follow-symlinks --delete
+      env:
+        AWS_S3_BUCKET: 'yvco'
+        AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
+        AWS_REGION: 'us-east-1'
+        SOURCE_DIR: './build'
+    - name: invalidate
+      uses: chetan/invalidate-cloudfront-action@master
+      env:
+        DISTRIBUTION: ${{ secrets.DISTRIBUTION }}
+        PATHS: /*
+        AWS_REGION: 'eu-east-1'
+        AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
