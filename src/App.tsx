@@ -64,12 +64,12 @@ function App() {
   //   console.log("Recognition error")
   // }
 
-  recognition.onend = () => {
-    if (!recognitionOn) return
-    try {
-      startRecognition()
-    } catch (e) {}
-  }
+  // recognition.onend = () => {
+  //   if (!recognitionOn) return
+  //   try {
+  //     startRecognition()
+  //   } catch (e) {}
+  // }
    
   recognition.onresult = (event: any) => {
       const transcript = event.results[event.results.length - 1][0].transcript
